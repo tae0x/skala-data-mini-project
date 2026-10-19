@@ -25,6 +25,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 
 발표자료는 팀원들이 Canva MCP로 같이 만든다. 서버는 저장소 루트의 `.mcp.json`(project 스코프)에 등록돼 있고, `.mcp.json`에는 URL만 있고 토큰은 넣지 않는다.
 처음 열면 서버 승인 프롬프트가 뜨고, `/mcp`에서 각자 Canva 계정으로 인증한다. 주소(`https://mcp.canva.com/mcp`)는 `claude mcp get canva`에서 Connected로 확인했다. 연결에 실패하면 인증 상태부터 확인한다.
+발표 PDF와 대본은 `reports/presentation/`에 로컬로만 두고(`.gitignore` 대상) 원본은 Canva다. 수정은 Canva에서 하고, 점검 전에 PDF를 다시 내보내 덮어쓴다.
 `docs/`의 PDF는 저작권 문구가 있으므로 Canva에 올리지 않는다. 그림은 `reports/figures/`를 쓴다.
 
 ## 코드 구조
