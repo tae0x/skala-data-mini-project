@@ -1,13 +1,15 @@
-pandas
-numpy
-scipy
-statsmodels
-scikit-learn
-rdkit
-matplotlib
-seaborn
-ipykernel
-nbconvert
+# EDA 재현에 쓴 버전(Python 3.11). RDKit 버전이 바뀌면 기술자 개수(217)와 이름이 달라질 수 있다.
+pandas==3.0.6
+numpy==2.4.6
+scipy==1.17.1
+statsmodels==0.15.0
+scikit-learn==1.9.1
+rdkit==2026.9.1
+matplotlib==3.11.2
+seaborn==0.13.2
+ipykernel==7.4.0
+nbconvert==7.17.2
+# 모델링 단계용(아직 설치/검증 전이라 버전 미고정)
 xgboost
 lightgbm
 catboost
