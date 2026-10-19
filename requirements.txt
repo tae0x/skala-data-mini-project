@@ -1,0 +1,15 @@
+pandas
+numpy
+scipy
+statsmodels
+scikit-learn
+rdkit
+matplotlib
+seaborn
+ipykernel
+nbconvert
+xgboost
+lightgbm
+catboost
+optuna
+shap
