@@ -61,3 +61,4 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 
 - `docs/professor_notes.md`: 교수님 공지와 분석 가이드(EDA → 분할 → 전처리 → 파이프라인 → 모델링 → 튜닝/앙상블 → 해석), Day2 과제 안내, 10/20 평가 기준(구두 전달 메모)
 - `docs/데이터분석 및 AIOps_7.데이터분석 Mini Project_박병선p.pdf`: 과제 배경, 컬럼 정의, 평가지표 슬라이드 (git 제외)
+- `docs/reference/titanic/`: 교수님이 준 타이타닉 실습 노트북 8개(추적). `07`이 모델 10종 Optuna 튜닝 예제다. 우리 코드가 아니라 참고용이며 데이터와 모델 파일이 없어 실행되지 않는다. 가져올 때 지표(`accuracy` → `f1`)와 스케일러 누수(`Pipeline` 안에서 fit)를 바꿔야 한다(자세한 내용은 폴더의 `README.md`).

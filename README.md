@@ -42,7 +42,7 @@ uv pip install --python .venv/bin/python -r requirements.txt
 | `study/` | 데이터 분석 입문자용 학습 자료 |
 | `.mcp.json` | Canva MCP 서버 설정(project 스코프) |
 | `CLAUDE.md` | Claude Code용 프로젝트 안내 |
-| `docs/` | 교수님 안내 메모(`professor_notes.md`, 추적). 저작권 문구가 있는 PDF만 git 제외 |
+| `docs/` | 교수님 안내 메모(`professor_notes.md`)와 참고 자료(`reference/titanic/`: 타이타닉 실습, Optuna 예제 포함)는 추적. 저작권 문구가 있는 PDF만 git 제외 |
 | `data/`, `.venv/` | 로컬에만 있음(git 제외) |
 
 ## 문서 읽는 순서

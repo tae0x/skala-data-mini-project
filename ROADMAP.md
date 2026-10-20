@@ -70,6 +70,7 @@
 - 분할을 먼저 하고(`stratify=y`), 모든 전처리 기준은 학습 데이터에서만 학습한다.
 - 전처리와 모델은 `Pipeline`/`ColumnTransformer`로 묶어 `predict_input.csv`에도 같은 처리를 적용한다.
 - 교차검증은 Stratified 5-Fold. 단순 기준선(Dummy, Logistic, Decision Tree)을 먼저 만든 뒤 트리 앙상블(RF, XGBoost, LightGBM, CatBoost)을 비교한다.
+- Optuna는 교수님 실습 `docs/reference/titanic/07_타이타닉 사망 생존 데이터 학습.ipynb`를 참고하되 `scoring='f1'`로 바꾸고, 스케일러는 `Pipeline` 안에서 fit한다(폴더 `README.md` 참고). 상위 2~3개 모델만 튜닝한다.
 - 교수님 참고 프로세스 14단계 중 필요한 것만 쓴다(`docs/professor_notes.md`). 클래스 불균형 처리는 54.4 대 45.6이라 우선순위가 낮다.
 - 시간이 5시간 40분뿐이므로 단순한 것부터 시작하고, 실험마다 위 로그를 바로 기록한다.
 
