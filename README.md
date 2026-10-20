@@ -1,6 +1,6 @@
 # 신약 후보물질 독성 예측 (SKALA 데이터분석 Mini Project)
 
-화합물의 구조 정보와 물성 수치로 **독성이 있는지 없는지**를 맞히는 이진 분류 과제입니다. 현재는 **Day1 EDA까지 끝났고 모델링은 시작하지 않았습니다.**
+화합물의 구조 정보와 물성 수치로 **독성이 있는지 없는지**를 맞히는 이진 분류 과제입니다. **Day1 EDA는 끝났고, 현재 Day2 개별 챌린지(Modeling & Prediction)를 진행 중입니다.** 모델링 코드는 아직 없습니다.
 
 - 평가 지표: **F1 Score**
 - Positive 클래스: `label` = 1 = **독성 없음** (0 = 독성 있음). 직관과 반대이니 지표를 해석할 때 주의하세요.
@@ -62,8 +62,8 @@ uv pip install --python .venv/bin/python -r requirements.txt
 - 전처리 기준(대체값, 스케일러 등)은 모두 학습 데이터에서만 정하고, 분류이므로 분할에는 `stratify=y`를 씁니다.
 - `docs/`의 PDF(저작권 문구가 있는 교육 자료)와 `data/`는 git에 올리지 않습니다.
 
-## 다음 단계
+## Day2 진행 (모델링과 예측 제출)
 
-분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv`(열: `SMILES`, `output`) 제출.
+계획은 다음 순서입니다. 분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv`(열: `SMILES`, `output`) 제출.
 
 Day2는 **개별 챌린지**(Modeling & Prediction)입니다. 일정, 제출 계획, 실험 기록은 [`ROADMAP.md`](ROADMAP.md)를 보세요.

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 프로젝트 개요
 
-SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분류). 현재 단계는 **Day1 EDA까지**이며 모델링은 하지 않았다.
+SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분류). **Day1 EDA는 완료**했고 **Day2 개별 챌린지(Modeling & Prediction)가 진행 중**이다. 모델링 코드는 아직 없다.
 빌드, 테스트, 린트 설정은 없다.
 
 ## Git 규칙
@@ -17,7 +17,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 - 가상환경은 `.venv`(Python 3.11, `uv`로 생성)이고 `.gitignore` 대상이다. Python 3.14 시스템 파이썬에는 분석 라이브러리가 없다.
 - `.gitignore`에는 `.venv/` 외에 `docs/*.pdf`, `data/`, `__pycache__/`, `.DS_Store`, `reports/presentation/`, `submissions/`도 있다. `data/train.csv`는 git에 없으므로 과제 배포본을 직접 넣어야 한다.
 - 설치: `uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python -r requirements.txt`
-  - EDA에 필요한 패키지(pandas, scipy, statsmodels, scikit-learn, rdkit, matplotlib, seaborn, ipykernel, nbconvert)만 설치해서 검증했다. `xgboost`, `lightgbm`, `catboost`, `optuna`, `shap`는 `requirements.txt`에는 있지만 아직 설치/검증하지 않았다.
+  - EDA에 필요한 패키지(pandas, scipy, statsmodels, scikit-learn, rdkit, matplotlib, seaborn, ipykernel, nbconvert)만 설치해서 검증했다. `xgboost`, `lightgbm`, `catboost`, `optuna`, `shap`는 `requirements.txt`에는 있지만(버전 미고정) 아직 설치/검증하지 않았다. Day2에서 사용할 때 설치하고, 검증한 뒤 버전을 고정한다.
 - EDA 노트북 재실행(프로젝트 루트에서): `.venv/bin/python -m nbconvert --to notebook --execute --inplace notebooks/01_eda.ipynb`
   - 그림은 `reports/figures/`, 표는 `reports/tables/`에 덮어써진다.
 
@@ -49,7 +49,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 ## 평가 및 분석 원칙
 
 - 주 지표는 F1 Score(Positive = 독성 없음). **전부 1로 예측하는 기준선의 F1이 이미 0.705**라서 모델 F1은 이 값과 비교한다.
-- 분석 범위는 EDA까지다. 모델링은 Day2 이후에 하며 사용자가 요청할 때만 시작한다. Day2는 개별 챌린지(Modeling & Prediction)이고 일정, 제출 계획, 실험 로그는 `ROADMAP.md`에서 관리한다.
+- Day1(EDA)은 끝났다. Day2는 개별 챌린지로 모델링과 `predict_input.csv` 예측 제출이 목표이며, 일정, 제출 계획, 실험 로그는 `ROADMAP.md`에서 관리한다. 모델링 노트북은 `notebooks/`에 두고 `01_eda.ipynb`와 같은 ROOT 방식으로 시작한다. 코드 작성과 실행은 사용자가 요청할 때 한다.
 - 데이터 분할을 전처리보다 먼저 수행한다. 대체값, 스케일러, 인코딩 등 모든 전처리 기준은 학습 데이터에서만 학습한다. 분류이므로 `stratify=y`를 적용한다. `notebooks/01_eda.ipynb`의 라벨 기반 통계는 전체 train 기준 탐색용이므로 특성 선택은 분할 후 다시 한다.
 - 전처리와 모델은 scikit-learn `Pipeline`/`ColumnTransformer`로 묶고, 교차검증은 Stratified 5-Fold를 쓴다. 단순 baseline(Dummy, Logistic, 단일 Decision Tree)을 먼저 만든 뒤 트리 앙상블(RF, XGBoost, LightGBM, CatBoost)을 비교한다.
 - Day2 평가 기준(10/20 구두 안내): 다중공선성 컬럼을 어떻게 찾고 해소했는지, 사용한 피처별 설명력(영향력), RDKit 파생변수 활용을 보여 줘야 한다. 대응 체크리스트는 `ROADMAP.md` 7절이다.
