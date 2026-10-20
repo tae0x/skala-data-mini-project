@@ -9,9 +9,10 @@ matplotlib==3.11.2
 seaborn==0.13.2
 ipykernel==7.4.0
 nbconvert==7.17.2
-# 모델링 단계용(아직 설치/검증 전이라 버전 미고정)
-xgboost
-lightgbm
-catboost
+# 모델링 단계용: 03, 04 노트북에서 실행해 검증한 버전
+lightgbm==4.7.0
+xgboost==3.2.0
+catboost==1.2.10
+# 아직 검증 전이라 버전 미고정(optuna는 05 튜닝 완료 후 고정, shap은 해석 단계에서 설치)
 optuna
 shap
