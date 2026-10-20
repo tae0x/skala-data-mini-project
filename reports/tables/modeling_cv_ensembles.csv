@@ -1,0 +1,7 @@
+구성(AUC 상위 k개),k,AUC,F1@0.5,최대 F1,최적 임계값
+LightGBM,1,0.8817,0.8229,0.8273,0.33
+LightGBM+XGBoost,2,0.8826,0.8218,0.8269,0.41
+LightGBM+XGBoost+HistGB,3,0.8823,0.8228,0.8272,0.41
+LightGBM+XGBoost+HistGB+RandomForest,4,0.8835,0.8232,0.8279,0.43
+LightGBM+XGBoost+HistGB+RandomForest+CatBoost,5,0.8831,0.8247,0.8274,0.42
+LightGBM+XGBoost+HistGB+RandomForest+CatBoost+ExtraTrees,6,0.8842,0.825,0.8285,0.43
