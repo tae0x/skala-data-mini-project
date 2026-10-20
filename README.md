@@ -61,4 +61,12 @@ uv pip install --python .venv/bin/python -r requirements.txt
 
 ## 다음 단계
 
-분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv` 제출. Day2의 세부 일정은 교수님 안내를 확인하세요.
+분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv` 제출. 
+
+Day2는 **개별 챌린지**(Individual Challenge: Modeling & Prediction)로 진행합니다.
+
+| 시간 | 내용 |
+|---|---|
+| 09:00~09:30 | Challenge Briefing |
+| 09:30~11:50, 13:10~16:30 | Individual Challenge: Modeling & Prediction |
+| 16:30~18:00 | Jam Study: Review & Wrap-up |

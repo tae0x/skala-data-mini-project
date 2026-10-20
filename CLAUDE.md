@@ -48,7 +48,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 ## 평가 및 분석 원칙
 
 - 주 지표는 F1 Score(Positive = 독성 없음). **전부 1로 예측하는 기준선의 F1이 이미 0.705**라서 모델 F1은 이 값과 비교한다.
-- 분석 범위는 EDA까지다. 모델링은 Day2 이후에 하며 사용자가 요청할 때만 시작한다.
+- 분석 범위는 EDA까지다. 모델링은 Day2 이후에 하며 사용자가 요청할 때만 시작한다. Day2는 개별 챌린지(Modeling & Prediction)이고 일정은 09:00 브리핑, 09:30~11:50과 13:10~16:30 개별 작업, 16:30~18:00 Jam Study다(`docs/professor_notes.md`).
 - 데이터 분할을 전처리보다 먼저 수행한다. 대체값, 스케일러, 인코딩 등 모든 전처리 기준은 학습 데이터에서만 학습한다. 분류이므로 `stratify=y`를 적용한다. `eda.ipynb`의 라벨 기반 통계는 전체 train 기준 탐색용이므로 특성 선택은 분할 후 다시 한다.
 - 전처리와 모델은 scikit-learn `Pipeline`/`ColumnTransformer`로 묶고, 교차검증은 Stratified 5-Fold를 쓴다. 단순 baseline(Dummy, Logistic, 단일 Decision Tree)을 먼저 만든 뒤 트리 앙상블(RF, XGBoost, LightGBM, CatBoost)을 비교한다.
 - SMILES는 식별자에 가까워서(8,349개 전부 고유) 변수로 쓰지 않고, 파생변수를 만든 뒤 버려도 된다는 안내를 받았다.
