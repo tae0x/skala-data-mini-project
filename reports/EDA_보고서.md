@@ -3,7 +3,7 @@
 - 데이터: `data/train.csv` (8,349건 × 3,078열), 과제: 이진 분류, 평가지표: **F1-score** (Positive = `label` 1 = 독성 없음)
 - 범위: EDA까지만 수행했고 모델링은 하지 않았다.
 - 초점: **각 컬럼이 종속변수 `label`(독성 여부)을 얼마나 설명하는가**
-- 재현: `eda.ipynb`를 위에서부터 실행하면 아래 수치와 그림(`reports/figures/`), 표(`reports/tables/`)가 모두 다시 만들어진다.
+- 재현: `notebooks/01_eda.ipynb`를 위에서부터 실행하면 아래 수치와 그림(`reports/figures/`), 표(`reports/tables/`)가 모두 다시 만들어진다.
 
 ## 1. 핵심 요약
 
@@ -83,7 +83,7 @@
 
 ## 5. SMILES 파생변수 (RDKit)
 
-- RDKit 분자 기술자 217개를 계산했다(`features.py`의 `compute_rdkit_descriptors`). 파싱 실패 0건.
+- RDKit 분자 기술자 217개를 계산했다(`src/features.py`의 `compute_rdkit_descriptors`). 파싱 실패 0건.
 - **SMILES는 파생변수를 만든 뒤 변수로 쓰지 않는다.** 8,349개가 모두 고유한 문자열이라 식별자에 가깝다.
 - 처리 내역:
   - 상수 기술자 10개 제거 (`rd_fr_azo`, `rd_fr_epoxide` 등).

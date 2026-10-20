@@ -6,7 +6,7 @@
 
 - `data/train.csv`로 독성 예측 모델을 만들고 `data/predict_input.csv`(927건)의 독성을 예측한다.
 - 결과 파일 `predict_output_<작성자>.csv`의 열은 **`SMILES`, `output`** 두 개이며, `output`에는 예측값 0/1을 넣는다. 열 이름은 바꾸지 않는다.
-- 양식은 `data/predict_output_홍길동.csv`를 따른다. 제출은 교수님이 안내한 폼으로 한다(링크는 슬랙 공지 참고. 저장소에는 URL을 적지 않는다).
+- 양식은 `submissions/predict_output_홍길동.csv`를 따르고, 만든 제출 파일도 `submissions/`에 저장한다(git 제외). 제출은 교수님이 안내한 폼으로 한다(링크는 슬랙 공지 참고. 저장소에는 URL을 적지 않는다).
 - 교수님 취지: 한 번의 높은 점수보다 **모델을 개선하며 성능이 어떻게 변하는지 확인하는 과정**이 중요하다. 가설을 세우고 실험하며 Day1 EDA 발견을 모델링에 연결한다.
 - 주 지표는 F1(Positive = `label` 1 = 독성 없음). 기준선(전부 1 예측)은 F1 0.705다.
 

@@ -23,7 +23,7 @@ uv venv --python 3.11 .venv
 uv pip install --python .venv/bin/python -r requirements.txt
 
 # EDA 노트북 재실행 (프로젝트 루트에서)
-.venv/bin/python -m nbconvert --to notebook --execute --inplace eda.ipynb
+.venv/bin/python -m nbconvert --to notebook --execute --inplace notebooks/01_eda.ipynb
 ```
 
 - 노트북은 루트 기준 상대경로를 쓰므로 반드시 루트에서 실행합니다.
@@ -35,8 +35,9 @@ uv pip install --python .venv/bin/python -r requirements.txt
 | 경로 | 내용 |
 |---|---|
 | `ROADMAP.md` | Day2 일정, 제출 계획, 실험 로그, 제출 체크리스트 |
-| `eda.ipynb` | EDA 전체(구조, 품질, 단변량, 변수별 label 설명력, RDKit 파생변수) |
-| `features.py` | SMILES에서 RDKit 기술자를 만드는 `compute_rdkit_descriptors()` |
+| `notebooks/01_eda.ipynb` | EDA 전체(구조, 품질, 단변량, 변수별 label 설명력, RDKit 파생변수) |
+| `src/features.py` | SMILES에서 RDKit 기술자를 만드는 `compute_rdkit_descriptors()` |
+| `submissions/` | 제출 파일(`predict_output_*.csv`)과 양식. git 제외 |
 | `reports/` | EDA 보고서, 그림(`figures/`), 표(`tables/`) |
 | `study/` | 데이터 분석 입문자용 학습 자료 |
 | `.mcp.json` | Canva MCP 서버 설정(project 스코프) |
@@ -49,7 +50,7 @@ uv pip install --python .venv/bin/python -r requirements.txt
 1. [`study/01_프로젝트_한눈에_보기.md`](study/01_프로젝트_한눈에_보기.md): 프로젝트 개요, 전체 단계, 진행 상황
 2. [`study/02_핵심_개념.md`](study/02_핵심_개념.md): 필요한 개념과 퀴즈
 3. [`study/03_발표_예상질문.md`](study/03_발표_예상질문.md): 발표 Q&A
-4. [`reports/EDA_보고서.md`](reports/EDA_보고서.md) → `eda.ipynb`
+4. [`reports/EDA_보고서.md`](reports/EDA_보고서.md) → `notebooks/01_eda.ipynb`
 
 ## 팀 작업
 
