@@ -82,7 +82,7 @@ def build_pipeline(model, group_cols, groups, scale=False, corr=None, vif=None):
     그 밖의 그룹(fp, maccs, morgan_cnt 등): 상수열 제거 → (상관 필터)
     모든 단계는 fit 데이터에서만 학습된다.
     """
-    num_cols = [c for g in groups if g != "fp" for c in group_cols[g]]
+    num_cols = [c for g in groups if g in ("cont", "rdkit") for c in group_cols[g]]
     transformers = []
     if num_cols:
         steps = [("imp", SimpleImputer(strategy="median")), ("var", VarianceThreshold(0.0))]
