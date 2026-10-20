@@ -47,10 +47,9 @@ uv pip install --python .venv/bin/python -r requirements.txt
 
 ## 문서 읽는 순서
 
-1. [`study/01_프로젝트_한눈에_보기.md`](study/01_프로젝트_한눈에_보기.md): 프로젝트 개요, 전체 단계, 진행 상황
-2. [`study/02_핵심_개념.md`](study/02_핵심_개념.md): 필요한 개념과 퀴즈
-3. [`study/03_발표_예상질문.md`](study/03_발표_예상질문.md): 발표 Q&A
-4. [`study/04_Day2_모델링_이해하기.md`](study/04_Day2_모델링_이해하기.md): Day2 모델링의 뼈대와 핵심 개념(비유 중심)
+1. [`study/01_프로젝트_개요와_진행상황.md`](study/01_프로젝트_개요와_진행상황.md): 프로젝트 개요, 전체 단계, 진행 상황
+2. [`study/02_Day1_핵심_개념과_발표QA.md`](study/02_Day1_핵심_개념과_발표QA.md): 필요한 개념, 퀴즈, 발표 Q&A
+3. [`study/03_Day2_모델링_개념과_결과.md`](study/03_Day2_모델링_개념과_결과.md): Day2 모델링의 뼈대와 핵심 개념(비유 중심)
 4. [`reports/EDA_보고서.md`](reports/EDA_보고서.md) → `notebooks/01_eda.ipynb`
 
 ## 팀 작업
