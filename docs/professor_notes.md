@@ -59,14 +59,14 @@ Leaderboard도 확인해보면서 본인의 모델을 끝까지 개선해보세�
 - 내일(10/21) 한 번에 중간 제출 자료를 업데이트해서 같이 제출해도 된다.
   - 확인 필요: "중간 제출 자료"가 Day1 EDA 발표자료의 갱신본인지, 모델링 결과를 담은 자료인지 메모만으로는 알 수 없다.
 
-현재 프로젝트 상태 (EDA 기준, 2026-10-20)
+현재 프로젝트 상태 (Day2 종료 기준, 2026-10-20)
 
-| 평가 기준 | 지금까지 한 것 | 남은 것 |
+| 평가 기준 | 한 것 | 남은 것 |
 |---|---|---|
-| 다중공선성 | 연속형 `MolWt`와 `qed`의 Spearman 상관 -0.76, RDKit 파생변수 204개 중 \|Spearman\| > 0.95 쌍 66개를 **식별만** 함 | 해소 방법(상관 군집별 대표 변수 선택, VIF 등)과 근거를 정해 적용하고 기록. 분할 후 학습 데이터 기준으로 수행 |
-| 피처별 설명력 | 3,231개 변수의 Gini와 FDR 보정 q값을 계산함(`reports/tables/feature_explanatory_power.csv`). 단, **전체 train 기준 탐색용** | 모델에 실제로 쓴 피처에 대해 분할 후 학습 데이터로 다시 계산하거나 SHAP, Permutation Importance로 제시. 불필요한 피처 제거 근거 포함 |
-| RDKit 파생변수 | 217개를 계산하고 204개로 정리함. 설명력 상위는 `clogp`와 극성 계열(`rd_TPSA` 등) | 모델에 포함했을 때의 효과를 변수군별로 비교 |
-| 중간 제출 자료 | Day1 EDA 발표자료 제출 완료 | 갱신 범위를 교수님께 확인 |
+| 다중공선성 | Day1에 `MolWt`와 `qed`의 Spearman 상관 -0.76, RDKit 파생변수 204개 중 \|Spearman\| > 0.95 쌍 66개를 식별했다. Day2에 학습 데이터 기준 `CorrFilter`(상관 0.95)와 `VifFilter`(VIF > 10, 원본 `clogp`/`qed`/`sa_score` 보호)로 수치형 207개를 134개로 줄이고 성능이 유지되는 것(F1 0.819 대 0.820)을 확인했다(`notebooks/02_modeling.ipynb`) | 없음 |
+| 피처별 설명력 | Day1 Gini와 q값은 전체 train 기준 탐색용이다. Day2에는 최종 모델에 대해 분할 후 학습한 모델의 SHAP으로 정리했고(`reports/tables/final_shap_top30.csv`, `final_shap_groups.csv`), 피처군 제거 실험(`modeling_feature_groups.csv`)과 중요도 상위 k개 선택(`modeling_feature_selection.csv`)으로 불필요한 피처를 뺀 근거를 남겼다 | 없음 |
+| RDKit 파생변수 | 217개를 계산하고 204개로 정리해 모델에 넣었다. 변수군별 효과는 `modeling_feature_groups.csv`(수치 4개 / + RDKit / + 핑거프린트 등), SHAP 영향력 비중은 RDKit 31.1%, `clogp`가 최상위 변수다 | 없음 |
+| 중간 제출 자료 | Day1 EDA 발표자료 제출 완료. Day2 결과는 `ROADMAP.md`, `study/03`에 정리했다 | 갱신 범위를 교수님께 확인(10/21 제출 가능) |
 
 ## 일반적인 머신러닝 프로세스 (딥러닝 X, 교수님 참고자료)
 

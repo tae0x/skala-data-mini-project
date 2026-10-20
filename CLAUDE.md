@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 프로젝트 개요
 
-SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분류). **Day1 EDA는 완료**했고 **Day2 개별 챌린지(Modeling & Prediction)가 진행 중**이다. 모델링 코드는 아직 없다.
+SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분류). **Day1 EDA는 완료**했고 **Day2 개별 챌린지(Modeling & Prediction)는 제출 4회를 모두 마쳤다**(최고 리더보드 F1 0.8351). 모델링 코드는 `src/`와 `notebooks/02~06`에 있다.
 빌드, 테스트, 린트 설정은 없다.
 
 ## Git 규칙
@@ -17,7 +17,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 - 가상환경은 `.venv`(Python 3.11, `uv`로 생성)이고 `.gitignore` 대상이다. Python 3.14 시스템 파이썬에는 분석 라이브러리가 없다.
 - `.gitignore`에는 `.venv/` 외에 `docs/*.pdf`, `data/`, `__pycache__/`, `.DS_Store`, `reports/presentation/`, `submissions/`도 있다. `data/train.csv`는 git에 없으므로 과제 배포본을 직접 넣어야 한다.
 - 설치: `uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python -r requirements.txt`
-  - EDA에 필요한 패키지(pandas, scipy, statsmodels, scikit-learn, rdkit, matplotlib, seaborn, ipykernel, nbconvert)만 설치해서 검증했다. `lightgbm`, `xgboost`, `catboost`는 Day2 노트북(03, 04)에서 실행해 검증하고 버전을 고정했다. `optuna`는 05 튜닝 완료 후, `shap`은 해석 단계에서 설치하고 검증한 뒤 버전을 고정한다.
+  - 모든 버전은 실행해서 검증한 값이다. EDA 패키지(pandas, scipy, statsmodels, scikit-learn, rdkit, matplotlib, seaborn, ipykernel, nbconvert)는 01에서, `lightgbm`, `xgboost`, `catboost`는 03, 04에서, `optuna`는 05에서, `shap`은 06에서 검증했다.
 - EDA 노트북 재실행(프로젝트 루트에서): `.venv/bin/python -m nbconvert --to notebook --execute --inplace notebooks/01_eda.ipynb`
   - 그림은 `reports/figures/`, 표는 `reports/tables/`에 덮어써진다.
 
@@ -33,6 +33,9 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 - `README.md`: 팀원용 첫 안내(진행 상황, 설치와 실행, 폴더 구조, 주의사항). 진행 단계나 핵심 수치가 바뀌면 함께 갱신한다.
 - `ROADMAP.md`: Day2 일정, 제출 계획(최대 4회), 실험 로그, 제출 전 체크리스트. 일정이 바뀌면 여기만 고친다. 제출 폼 URL은 저장소에 적지 않는다(슬랙 공지 참고).
 - `notebooks/01_eda.ipynb`: EDA 전체(구조, 품질, 단변량, 변수별 label 설명력, RDKit 파생변수). 첫 셀이 프로젝트 루트(`data/`가 있는 폴더)를 찾아 `ROOT / "data/train.csv"`, `ROOT / "reports"`를 쓰고 `src/`를 `sys.path`에 추가하므로 루트와 `notebooks/` 어디서 실행해도 된다. 새 노트북도 같은 방식으로 시작한다.
+- `notebooks/02~07`: Day2 모델링을 번호 순서로 잇는다. 앞 번호의 결과(`data/cache/`, `reports/tables/`)를 이어 쓰므로 번호 순서로 실행한다. 02 기준선과 임계값, 다중공선성, 제출 1 / 03 모델 6종 비교 / 04 피처군과 피처 선택 / 05 Optuna 튜닝과 앙상블 / 06 홀드아웃 평가, 제출 2, SHAP / 07 제출 3·4 재현과 리더보드 해석(05, 06의 캐시가 필요). 05는 가장 오래 걸리고 진행 로그를 `data/cache/optuna_progress.log`에 남긴다.
+- `src/data.py`(`load_all`: 분할과 캐시), `src/preprocess.py`(`CorrFilter`, `VifFilter`, `build_pipeline`, `build_selected_pipeline`), `src/models.py`(`TanimotoSVC`), `src/validate_submission.py`(제출 파일 검증. `.venv/bin/python src/validate_submission.py <파일>`). 전처리와 피처 선택은 모두 `Pipeline` 안에서 학습 fold에만 fit된다.
+- `.claude/agents/leakage-auditor.md`: 누수 점검용 읽기 전용 서브에이전트. 전처리, 피처 선택, 교차검증, Optuna 코드를 바꾼 뒤 부른다.
 - `src/features.py`: `compute_rdkit_descriptors(smiles)`가 SMILES에서 RDKit 기술자 217개를 만든다. 컬럼 이름에 `rd_` 접두사를 붙여 원본 컬럼(`MolWt`, `qed`)과 겹치지 않게 한다. 상수열 제거와 결측 대체는 하지 않는다(분할 후 학습 데이터 기준으로 해야 하므로). `predict_input.csv`에도 같은 함수를 쓴다.
 - `reports/EDA_보고서.md`: 변수별 설명력 중심의 보고서. 수치는 노트북 출력에서 가져왔다.
 - `study/`: 데이터 분석 입문자(사용자)를 위한 학습 자료. `01_프로젝트_개요와_진행상황.md`(개요와 진행 상황), `02_Day1_핵심_개념과_발표QA.md`(개념, 퀴즈, 발표 Q&A), `03_Day2_모델링_개념과_결과.md`(Day2 모델링의 뼈대와 개념). 프로젝트 숫자가 바뀌면 보고서와 함께 갱신한다.
@@ -49,7 +52,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 ## 평가 및 분석 원칙
 
 - 주 지표는 F1 Score(Positive = 독성 없음). **전부 1로 예측하는 기준선의 F1이 이미 0.705**라서 모델 F1은 이 값과 비교한다.
-- Day1(EDA)은 끝났다. Day2는 개별 챌린지로 모델링과 `predict_input.csv` 예측 제출이 목표이며, 일정, 제출 계획, 실험 로그는 `ROADMAP.md`에서 관리한다. 모델링 노트북은 `notebooks/`에 두고 `01_eda.ipynb`와 같은 ROOT 방식으로 시작한다. 코드 작성과 실행은 사용자가 요청할 때 한다.
+- Day1(EDA)과 Day2 개별 챌린지(모델링과 `predict_input.csv` 예측 제출 4회)는 끝났다. 최고 리더보드 F1은 0.8351(제출 3)이고 네 제출의 점수 폭 0.0067은 시험 세트 우연(표준편차 약 0.0126)보다 작다. 일정, 제출 결과, 실험 로그는 `ROADMAP.md`에서 관리한다. 모델링 노트북은 `notebooks/`에 두고 `01_eda.ipynb`와 같은 ROOT 방식으로 시작한다. 코드 작성과 실행은 사용자가 요청할 때 한다.
 - 데이터 분할을 전처리보다 먼저 수행한다. 대체값, 스케일러, 인코딩 등 모든 전처리 기준은 학습 데이터에서만 학습한다. 분류이므로 `stratify=y`를 적용한다. `notebooks/01_eda.ipynb`의 라벨 기반 통계는 전체 train 기준 탐색용이므로 특성 선택은 분할 후 다시 한다.
 - 전처리와 모델은 scikit-learn `Pipeline`/`ColumnTransformer`로 묶고, 교차검증은 Stratified 5-Fold를 쓴다. 단순 baseline(Dummy, Logistic, 단일 Decision Tree)을 먼저 만든 뒤 트리 앙상블(RF, XGBoost, LightGBM, CatBoost)을 비교한다.
 - Day2 평가 기준(10/20 구두 안내): 다중공선성 컬럼을 어떻게 찾고 해소했는지, 사용한 피처별 설명력(영향력), RDKit 파생변수 활용을 보여 줘야 한다. 대응 체크리스트는 `ROADMAP.md` 7절이다.

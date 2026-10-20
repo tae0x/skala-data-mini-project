@@ -1,6 +1,6 @@
 # 신약 후보물질 독성 예측 (SKALA 데이터분석 Mini Project)
 
-화합물의 구조 정보와 물성 수치로 **독성이 있는지 없는지**를 맞히는 이진 분류 과제입니다. **Day1 EDA는 끝났고, 현재 Day2 개별 챌린지(Modeling & Prediction)를 진행 중입니다.** 모델링 코드는 아직 없습니다.
+화합물의 구조 정보와 물성 수치로 **독성이 있는지 없는지**를 맞히는 이진 분류 과제입니다. **Day1 EDA와 Day2 개별 챌린지(Modeling & Prediction)의 제출 4회를 모두 마쳤습니다.** 최고 리더보드 F1은 0.8351(제출 3)이고, 모델링 코드는 `src/`와 `notebooks/02~06`에 있습니다.
 
 - 평가 지표: **F1 Score**
 - Positive 클래스: `label` = 1 = **독성 없음** (0 = 독성 있음). 직관과 반대이니 지표를 해석할 때 주의하세요.
@@ -28,7 +28,8 @@ uv pip install --python .venv/bin/python -r requirements.txt
 
 - 노트북은 루트 기준 상대경로를 쓰므로 반드시 루트에서 실행합니다.
 - 그림은 `reports/figures/`, 표는 `reports/tables/`에 덮어써집니다.
-- `requirements.txt`의 `xgboost`, `lightgbm`, `catboost`, `optuna`, `shap`는 모델링 단계용이며 아직 설치와 동작을 확인하지 않았습니다.
+- `requirements.txt`의 모든 버전은 실제로 실행해서 확인한 값입니다(`lightgbm`, `xgboost`, `catboost`, `optuna`, `shap` 포함).
+- Day2 노트북 `02~07`은 앞 번호의 결과(`data/cache/`, `reports/tables/`)를 이어 쓰므로 번호 순서로 실행합니다. `05`(Optuna 튜닝)가 가장 오래 걸리고 진행 로그는 `data/cache/optuna_progress.log`에 남습니다. `data/cache/`는 git에 없으며 처음 실행할 때 만들어집니다.
 
 ## 폴더 구조
 
@@ -36,7 +37,9 @@ uv pip install --python .venv/bin/python -r requirements.txt
 |---|---|
 | `ROADMAP.md` | Day2 일정, 제출 계획, 실험 로그, 제출 체크리스트 |
 | `notebooks/01_eda.ipynb` | EDA 전체(구조, 품질, 단변량, 변수별 label 설명력, RDKit 파생변수) |
-| `src/features.py` | SMILES에서 RDKit 기술자를 만드는 `compute_rdkit_descriptors()` |
+| `notebooks/02~07` | Day2 모델링: 02 기준선·임계값·다중공선성, 03 모델 6종 비교, 04 피처군·피처 선택, 05 Optuna 튜닝·앙상블, 06 홀드아웃·SHAP, 07 제출 3·4 재현과 리더보드 해석 |
+| `src/` | `data.py`(분할·캐시), `features.py`(RDKit 기술자·추가 지문), `preprocess.py`(상관·VIF 필터, 파이프라인), `models.py`(Tanimoto SVM), `validate_submission.py`(제출 파일 검증) |
+| `.claude/agents/` | 누수 점검용 서브에이전트(`leakage-auditor`) |
 | `submissions/` | 제출 파일(`predict_output_*.csv`)과 양식. git 제외 |
 | `reports/` | EDA 보고서, 그림(`figures/`), 표(`tables/`) |
 | `study/` | 데이터 분석 입문자용 학습 자료 |
@@ -64,6 +67,15 @@ uv pip install --python .venv/bin/python -r requirements.txt
 
 ## Day2 진행 (모델링과 예측 제출)
 
-계획은 다음 순서입니다. 분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv`(열: `SMILES`, `output`) 제출.
+진행 순서는 분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv`(열: `SMILES`, `output`) 제출이었고, 모두 끝났습니다.
 
-Day2는 **개별 챌린지**(Modeling & Prediction)입니다. 일정, 제출 계획, 실험 기록은 [`ROADMAP.md`](ROADMAP.md)를 보세요.
+| 제출 | 구성 | 교차검증 F1(OOF) | 리더보드 F1 |
+|---|---|---|---|
+| 1 | HistGB, 임계값 0.5 | 0.820 | 0.8284 |
+| 2 | LightGBM + XGBoost + Tanimoto SVM 평균(튜닝), 임계값 0.43 | 0.8328 | 0.8287 |
+| 3 | SVM + ExtraTrees + RandomForest 평균, 임계값 0.44 | 0.8339 | **0.8351** |
+| 4 | 제출 2·3 구성 평균, 임계값 0.45 | 0.8357 | 0.8312 |
+
+네 점수의 폭(0.0067)은 927건 시험 세트의 우연(F1 표준편차 약 0.0126)보다 작아서, 모델 구성의 차이는 구별되지 않습니다. 다중공선성은 상관(|Spearman| > 0.95)과 VIF(> 10) 필터로 수치형 207개를 134개로 줄였고, 피처 영향력은 SHAP으로 정리했습니다(`reports/tables/final_shap_*.csv`).
+
+Day2는 **개별 챌린지**(Modeling & Prediction)였습니다. 일정, 제출 계획, 실험 기록은 [`ROADMAP.md`](ROADMAP.md)를 보세요.
