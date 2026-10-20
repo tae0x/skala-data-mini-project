@@ -17,7 +17,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 - 가상환경은 `.venv`(Python 3.11, `uv`로 생성)이고 `.gitignore` 대상이다. Python 3.14 시스템 파이썬에는 분석 라이브러리가 없다.
 - `.gitignore`에는 `.venv/` 외에 `docs/*.pdf`, `data/`, `__pycache__/`, `.DS_Store`, `reports/presentation/`, `submissions/`도 있다. `data/train.csv`는 git에 없으므로 과제 배포본을 직접 넣어야 한다.
 - 설치: `uv venv --python 3.11 .venv && uv pip install --python .venv/bin/python -r requirements.txt`
-  - EDA에 필요한 패키지(pandas, scipy, statsmodels, scikit-learn, rdkit, matplotlib, seaborn, ipykernel, nbconvert)만 설치해서 검증했다. `xgboost`, `lightgbm`, `catboost`, `optuna`, `shap`는 `requirements.txt`에는 있지만(버전 미고정) 아직 설치/검증하지 않았다. Day2에서 사용할 때 설치하고, 검증한 뒤 버전을 고정한다.
+  - EDA에 필요한 패키지(pandas, scipy, statsmodels, scikit-learn, rdkit, matplotlib, seaborn, ipykernel, nbconvert)만 설치해서 검증했다. `lightgbm`, `xgboost`, `catboost`는 Day2 노트북(03, 04)에서 실행해 검증하고 버전을 고정했다. `optuna`는 05 튜닝 완료 후, `shap`은 해석 단계에서 설치하고 검증한 뒤 버전을 고정한다.
 - EDA 노트북 재실행(프로젝트 루트에서): `.venv/bin/python -m nbconvert --to notebook --execute --inplace notebooks/01_eda.ipynb`
   - 그림은 `reports/figures/`, 표는 `reports/tables/`에 덮어써진다.
 
@@ -35,7 +35,7 @@ SKALA 데이터분석 Mini Project: 신약 후보물질 독성 예측(이진 분
 - `notebooks/01_eda.ipynb`: EDA 전체(구조, 품질, 단변량, 변수별 label 설명력, RDKit 파생변수). 첫 셀이 프로젝트 루트(`data/`가 있는 폴더)를 찾아 `ROOT / "data/train.csv"`, `ROOT / "reports"`를 쓰고 `src/`를 `sys.path`에 추가하므로 루트와 `notebooks/` 어디서 실행해도 된다. 새 노트북도 같은 방식으로 시작한다.
 - `src/features.py`: `compute_rdkit_descriptors(smiles)`가 SMILES에서 RDKit 기술자 217개를 만든다. 컬럼 이름에 `rd_` 접두사를 붙여 원본 컬럼(`MolWt`, `qed`)과 겹치지 않게 한다. 상수열 제거와 결측 대체는 하지 않는다(분할 후 학습 데이터 기준으로 해야 하므로). `predict_input.csv`에도 같은 함수를 쓴다.
 - `reports/EDA_보고서.md`: 변수별 설명력 중심의 보고서. 수치는 노트북 출력에서 가져왔다.
-- `study/`: 데이터 분석 입문자(사용자)를 위한 학습 자료. `01_프로젝트_한눈에_보기.md`(개요와 진행 상황), `02_핵심_개념.md`(개념과 퀴즈), `03_발표_예상질문.md`(발표 Q&A). 프로젝트 숫자가 바뀌면 보고서와 함께 갱신한다.
+- `study/`: 데이터 분석 입문자(사용자)를 위한 학습 자료. `01_프로젝트_한눈에_보기.md`(개요와 진행 상황), `02_핵심_개념.md`(개념과 퀴즈), `03_발표_예상질문.md`(발표 Q&A), `04_Day2_모델링_이해하기.md`(Day2 모델링의 뼈대와 개념). 프로젝트 숫자가 바뀌면 보고서와 함께 갱신한다.
 
 ## 데이터 스키마 (`data/train.csv`, 약 52MB, 8,349건 + 헤더)
 
