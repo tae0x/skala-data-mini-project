@@ -13,6 +13,6 @@ nbconvert==7.17.2
 lightgbm==4.7.0
 xgboost==3.2.0
 catboost==1.2.10
-# 아직 검증 전이라 버전 미고정(optuna는 05 튜닝 완료 후 고정, shap은 해석 단계에서 설치)
-optuna
-shap
+# 05(튜닝), 06(SHAP) 노트북에서 실행해 검증한 버전
+optuna==5.0.0
+shap==0.51.0
