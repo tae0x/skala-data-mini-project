@@ -2,7 +2,7 @@
 import numpy as np
 import pandas as pd
 from rdkit import Chem, RDLogger
-from rdkit.Chem import Descriptors
+from rdkit.Chem import Descriptors, MACCSkeys, rdFingerprintGenerator
 
 RDLogger.DisableLog("rdApp.*")
 
@@ -31,3 +31,26 @@ def compute_rdkit_descriptors(smiles: pd.Series) -> pd.DataFrame:
         rows.append(row)
     out = pd.DataFrame(rows, index=smiles.index)
     return out.replace([np.inf, -np.inf], np.nan)
+
+
+def compute_extra_fingerprints(smiles: pd.Series) -> pd.DataFrame:
+    """SMILES에서 추가 분자 표현을 만든다: MACCS 167비트, Morgan/AtomPair/TopologicalTorsion 카운트.
+
+    행 단위 계산이라 fit이 없다. 카운트는 uint16으로 저장한다(AtomPair는 255를 넘을 수 있다).
+    파싱에 실패한 SMILES는 0으로 채운다.
+    """
+    morgan = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=2048)
+    atom_pair = rdFingerprintGenerator.GetAtomPairGenerator(fpSize=2048)
+    torsion = rdFingerprintGenerator.GetTopologicalTorsionGenerator(fpSize=1024)
+    sizes = {"maccs": 167, "morgan_cnt": 2048, "ap_cnt": 2048, "tt_cnt": 1024}
+    blocks = {k: np.zeros((len(smiles), n), dtype=np.uint16) for k, n in sizes.items()}
+    for i, smi in enumerate(smiles):
+        mol = Chem.MolFromSmiles(smi)
+        if mol is None:
+            continue
+        blocks["maccs"][i] = np.array(list(MACCSkeys.GenMACCSKeys(mol)), dtype=np.uint16)
+        blocks["morgan_cnt"][i] = morgan.GetCountFingerprintAsNumPy(mol)
+        blocks["ap_cnt"][i] = atom_pair.GetCountFingerprintAsNumPy(mol)
+        blocks["tt_cnt"][i] = torsion.GetCountFingerprintAsNumPy(mol)
+    cols = {f"{k}_{j}": blocks[k][:, j] for k, n in sizes.items() for j in range(n)}
+    return pd.DataFrame(cols, index=smiles.index)
