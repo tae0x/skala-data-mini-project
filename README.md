@@ -34,13 +34,15 @@ uv pip install --python .venv/bin/python -r requirements.txt
 
 | 경로 | 내용 |
 |---|---|
+| `ROADMAP.md` | Day2 일정, 제출 계획, 실험 로그, 제출 체크리스트 |
 | `eda.ipynb` | EDA 전체(구조, 품질, 단변량, 변수별 label 설명력, RDKit 파생변수) |
 | `features.py` | SMILES에서 RDKit 기술자를 만드는 `compute_rdkit_descriptors()` |
 | `reports/` | EDA 보고서, 그림(`figures/`), 표(`tables/`) |
 | `study/` | 데이터 분석 입문자용 학습 자료 |
 | `.mcp.json` | Canva MCP 서버 설정(project 스코프) |
 | `CLAUDE.md` | Claude Code용 프로젝트 안내 |
-| `data/`, `docs/`, `.venv/` | 로컬에만 있음(git 제외) |
+| `docs/` | 교수님 안내 메모(`professor_notes.md`, 추적). 저작권 문구가 있는 PDF만 git 제외 |
+| `data/`, `.venv/` | 로컬에만 있음(git 제외) |
 
 ## 문서 읽는 순서
 
@@ -57,16 +59,10 @@ uv pip install --python .venv/bin/python -r requirements.txt
 
 - **데이터 누수**: EDA의 라벨 기반 통계는 전체 train으로 계산한 탐색용입니다. 이 결과로 변수를 고르지 말고, 데이터를 먼저 분할한 뒤 학습 데이터에서 특성 선택을 다시 하세요.
 - 전처리 기준(대체값, 스케일러 등)은 모두 학습 데이터에서만 정하고, 분류이므로 분할에는 `stratify=y`를 씁니다.
-- `docs/`(저작권 문구가 있는 교육 자료)와 `data/`는 git에 올리지 않습니다.
+- `docs/`의 PDF(저작권 문구가 있는 교육 자료)와 `data/`는 git에 올리지 않습니다.
 
 ## 다음 단계
 
-분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv` 제출. 
+분할 → 전처리 → 기준선 모델(Dummy, 로지스틱, 결정트리) → 트리 앙상블 비교(5-겹 교차검증) → 튜닝 → 시험용 데이터로 최종 평가와 SHAP 해석 → `predict_output_<작성자>.csv`(열: `SMILES`, `output`) 제출.
 
-Day2는 **개별 챌린지**(Individual Challenge: Modeling & Prediction)로 진행합니다.
-
-| 시간 | 내용 |
-|---|---|
-| 09:00~09:30 | Challenge Briefing |
-| 09:30~11:50, 13:10~16:30 | Individual Challenge: Modeling & Prediction |
-| 16:30~18:00 | Jam Study: Review & Wrap-up |
+Day2는 **개별 챌린지**(Modeling & Prediction)입니다. 일정, 제출 계획, 실험 기록은 [`ROADMAP.md`](ROADMAP.md)를 보세요.
